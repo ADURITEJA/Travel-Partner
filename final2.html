@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather and City History</title>
+    <style>
+        /* Color Variables */
+        :root {
+            --off-white: #F9EFE5;
+            --black: #000000;
+            --slate-gray: #7F8790;
+            --steel-blue: #8F92A1;
+            --light-gray: #F8F8F8;
+        }
+
+        /* Font Imports */
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&family=Roboto:wght@400;500&display=swap');
+
+        /* General Page Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--off-white);
+            color: var(--black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Navbar Styling */
+        nav {
+            width: 100%;
+            background-color: var(--black);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--off-white);
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--steel-blue);
+        }
+
+        /* Heading Styling */
+        h1 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 600;
+            font-size: 2.8rem;
+            margin-top: 90px;
+            color: var(--black);
+            line-height: 1.2;
+        }
+
+        /* Input and Button Styling */
+        input, button {
+            padding: 14px 24px;
+            margin: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--slate-gray);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input {
+            width: 320px;
+            background-color: var(--light-gray);
+            color: var(--black);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--black);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: var(--black);
+            color: var(--off-white);
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--slate-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Weather and History Information Sections */
+        #result {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .weather-info, .history-info {
+            border: none;
+            padding: 25px;
+            margin: 25px auto;
+            border-radius: 12px;
+            background: var(--light-gray);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            text-align: left;
+        }
+
+        .weather-info h2, .history-info h2 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+
+        .weather-info p, .history-info p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 12px 0;
+            color: var(--slate-gray);
+        }
+
+        .weather-info span, .history-info span {
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            background-color: var(--black);
+            color: var(--off-white);
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: var(--steel-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--off-white);
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            input, button {
+                font-size: 0.95rem;
+                width: 90%;
+            }
+
+            .weather-info, .history-info {
+                padding: 20px;
+                font-size: 0.95rem;
+            }
+
+            .weather-info h2, .history-info h2 {
+                font-size: 1.5rem;
+            }
+
+            nav ul li {
+                margin: 0 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul li {
+                margin: 0;
+            }
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="final2.html">Home</a></li>
+            <li><a href="final3.html">Travel</a></li>
+            <li><a href="index7.html">Landmarks</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <h1>Weather and City History</h1>
+
+    <!-- Input field for city name -->
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button onclick="checkWeather()">Get Information</button>
+
+    <div id="weatherInfo" class="weather-info">
+        <h2>Weather Information</h2>
+        <p><strong>City: </strong><span id="cityName"></span></p>
+        <p><strong>Temperature: </strong><span id="temperature"></span> °C</p>
+        <p><strong>Climate: </strong><span id="climate"></span></p>
+    </div>
+
+    <div id="result" class="history-info">
+        <h2>City History</h2>
+        <p>Fetching history...</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Weather and City Info | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script src="api.js"></script>
+</body>
+</html>

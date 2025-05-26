@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --off-white: #F9EFE5;
+            --black: #000000;
+            --slate-gray: #7F8790;
+            --light-gray: #F8F8F8;
+            --steel-blue: #8F92A1;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--off-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--black);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 600;
+            color: var(--off-white);
+            font-size: 1.8rem;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--off-white);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--slate-gray);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a.active {
+            color: var(--steel-blue);
+            background-color: rgba(143, 146, 161, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 600;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--slate-gray);
+        }
+
+        /* Content Sections */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin: 4rem 0;
+        }
+
+        .section h2 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 600;
+            color: var(--steel-blue);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-content p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .section-content strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .section-content {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="final2.html" class="logo">Weather & City</a>
+            <ul class="nav-menu">
+                <li><a href="final2.html">Home</a></li>
+                <li><a href="final3.html">Travel</a></li>
+                <li><a href="index7.html">Landmarks</a></li>
+                <li><a href="#" class="active">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <h1>About Us</h1>
+        <p>Discover the team behind your favorite weather and city information platform. We're passionate about making information accessible and engaging for everyone.</p>
+    </section>
+
+    <main class="main-content">
+        <section class="section">
+            <h2>Who We Are</h2>
+            <div class="section-content">
+                <p>We are a team of passionate developers and designers focused on creating innovative, user-friendly solutions that make information easy to access and fun to explore. Our goal is to bridge the gap between technology and users through simple, engaging interfaces.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Our Mission</h2>
+            <div class="section-content">
+                <p>Our mission is to make learning about the world around us easier and more interactive. Whether it's exploring the weather in different cities or diving into rich historical facts, we aim to provide a seamless, informative experience for users everywhere.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Our Values</h2>
+            <div class="section-content">
+                <p>We believe in simplicity, clarity, and usability. Every design decision we make revolves around creating intuitive, enjoyable experiences for our users. We prioritize transparency, respect for privacy, and a commitment to providing accurate, reliable information.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Weather & City Info | <a href="#">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

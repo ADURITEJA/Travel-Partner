@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Routes</title>
+    
+    <style>
+        :root {
+        --off-white: #F9EFE5;
+        --black: #000000;
+        --slate-gray: #7F8790;
+        --light-gray: #F8F8F8;
+        --primary-color: #000000;
+        --secondary-color: #7F8790;
+        --accent-color: #8F92A1;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--off-white);
+        color: var(--black);
+        min-height: 100vh;
+        padding-top: 80px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--black);
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-sm);
+        z-index: 1000;
+    }
+
+    .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 600;
+        color: var(--off-white);
+        font-size: 1.8rem;
+        text-decoration: none;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: var(--off-white);
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+        color: var(--slate-gray);
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .nav-menu a.active {
+        color: var(--steel-blue);
+        background-color: rgba(143, 146, 161, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .nav-menu {
+            display: none;
+        }
+    }
+
+    /* Hero Section */
+    .hero-section {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 40px 0;
+    }
+
+    .hero-section h1 {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--black);
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+        color: var(--slate-gray);
+        margin-bottom: 2rem;
+    }
+
+    /* Search Form */
+    .search-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .search-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .search-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-field label {
+        font-weight: 500;
+        color: var(--slate-gray);
+        margin-bottom: 8px;
+    }
+
+    .search-field input {
+        padding: 12px 16px;
+        border: 2px solid var(--slate-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: var(--off-white);
+        transition: all 0.3s ease;
+    }
+
+    .search-field input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-button {
+        width: 100%;
+        padding: 14px 24px;
+        background-color: var(--primary-color);
+        color: var(--off-white);
+        border: none;
+        border-radius: 8px;
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .search-button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Map Section */
+    .map-section {
+        margin: 40px 0;
+    }
+
+    .map-container {
+        height: 600px;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Results Section */
+    .results-section {
+        margin-top: 40px;
+    }
+
+    .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 30px;
+    }
+
+    .results-card {
+        background: var(--light-gray);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .results-card h2 {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 600;
+        color: var(--black);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .routes-list, .options-list {
+        list-style: none;
+    }
+
+    .routes-list li, .options-list li {
+        padding: 15px;
+        background: var(--off-white);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .routes-list li:hover, .options-list li:hover {
+        transform: translateX(5px);
+        background: var(--light-gray);
+    }
+
+    .routes-list li strong {
+        display: block;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+    }
+
+    .routes-list li span, .options-list li span {
+        color: var(--slate-gray);
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .nav-menu {
+            display: none;
+        }
+        .logo {
+            font-size: 1.5rem;
+        }
+
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+
+        .search-fields {
+            grid-template-columns: 1fr;
+        }
+
+        .map-container {
+            height: 400px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">TRAVELPARTNER</a>
+            <ul class="nav-menu">
+                <li><a href="./final3.html">Destinations</a></li>
+                <li><a href="index7.html">Travel Suggestions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero-section">
+            <h1>Find Your Perfect Route</h1>
+            <p>Discover the best way to travel from point A to point B</p>
+            <form id="search-form" class="search-form">
+                <div class="search-fields">
+                    <div class="search-field">
+                        <label for="current-location">Current Location</label>
+                        <input type="text" id="current-location" placeholder="Enter your current location" required>
+                    </div>
+                    <div class="search-field">
+                        <label for="destination-location">Destination</label>
+                        <input type="text" id="destination-location" placeholder="Enter your destination" required>
+                    </div>
+                </div>
+                <button type="submit" class="search-button">Find Route</button>
+            </form>
+        </section>
+
+        <section class="map-section">
+            <div id="map" class="map-container"></div>
+        </section>
+
+        <section class="results-section">
+            <div class="results-grid">
+                <div class="results-card">
+                    <h2>Travel Routes</h2>
+                    <div class="routes-list" id="route-list"></div>
+                </div>
+                <div class="results-card">
+                    <h2>Nearby Options</h2>
+                    <div class="options-list" id="nearby-options"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRJfjNiVjWmidzsJSrA62p0S4Mlcb4yH0&libraries=places&callback=initMap" async defer></script>
+    <script>
+        let map, placesService, currentMarker, destinationMarker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 51.505, lng: -0.09 },
+                zoom: 13
+            });
+            placesService = new google.maps.places.PlacesService(map);
+        }
+
+        document.getElementById('search-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const currentLocation = document.getElementById('current-location').value.trim();
+            const destinationLocation = document.getElementById('destination-location').value.trim();
+
+            if (!currentLocation || !destinationLocation) return alert("Please enter both locations.");
+
+            try {
+                const currentCoords = await fetchCoordinates(currentLocation);
+                const destinationCoords = await fetchCoordinates(destinationLocation);
+
+                if (currentCoords && destinationCoords) {
+                    addMarker(currentCoords.lat, currentCoords.lng, "Current Location", true);
+                    addMarker(destinationCoords.lat, destinationCoords.lng, "Destination", false);
+                    drawRoute(currentCoords, destinationCoords);
+                    fetchRoutes(currentCoords, destinationCoords);
+                    findNearbyTravelOptions(currentCoords);
+                } else {
+                    alert("Unable to fetch coordinates for one or both locations.");
+                }
+            } catch (error) {
+                console.error("Error finding route:", error);
+                alert("Failed to find route. Please try again.");
+            }
+        });
+
+        async function fetchCoordinates(location) {
+            const geocoder = new google.maps.Geocoder();
+            return new Promise((resolve, reject) => {
+                geocoder.geocode({ address: location }, (results, status) => {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        resolve({ lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() });
+                    } else {
+                        reject(status);
+                    }
+                });
+            });
+        }
+
+        function addMarker(lat, lng, label, isCurrent) {
+            const marker = new google.maps.Marker({
+                position: { lat, lng },
+                map: map,
+                title: label
+            });
+
+            if (isCurrent) {
+                if (currentMarker) currentMarker.setMap(null);
+                currentMarker = marker;
+            } else {
+                if (destinationMarker) destinationMarker.setMap(null);
+                destinationMarker = marker;
+            }
+            map.setCenter({ lat, lng });
+        }
+
+        function drawRoute(start, end) {
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            const request = {
+                origin: { lat: start.lat, lng: start.lng },
+                destination: { lat: end.lat, lng: end.lng },
+                travelMode: google.maps.DirectionsTravelMode.DRIVING
+            };
+
+            directionsService.route(request, (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
+                }
+            });
+        }
+
+        function fetchRoutes(start, end) {
+            const routeList = document.getElementById("route-list");
+            routeList.innerHTML = "";
+
+            const directionsService = new google.maps.DirectionsService();
+            const modes = ['DRIVING', 'WALKING', 'BICYCLING', 'TRANSIT'];
+
+            modes.forEach(mode => {
+                const request = {
+                    origin: { lat: start.lat, lng: start.lng },
+                    destination: { lat: end.lat, lng: end.lng },
+                    travelMode: google.maps.DirectionsTravelMode[mode]
+                };
+
+                if (mode === 'TRANSIT') {
+                    request.transitOptions = {
+                        modes: ['BUS', 'TRAIN'],
+                        routingPreference: 'LESS_WALKING'
+                    };
+                }
+
+                directionsService.route(request, (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        const route = result.routes[0];
+                        const duration = route.legs[0].duration.text;
+                        const distance = route.legs[0].distance.text;
+                        const li = document.createElement("li");
+                        li.innerHTML = `<strong>${mode}</strong> - Estimated Time: ${duration}, Distance: ${distance}`;
+                        routeList.appendChild(li);
+                    }
+                });
+            });
+        }
+
+        function findNearbyTravelOptions(coords) {
+            const nearbyList = document.getElementById("nearby-options");
+            nearbyList.innerHTML = "";
+
+            const request = {
+                location: coords,
+                radius: 10000,
+                types: ['bus_station', 'train_station', 'bicycle_store']
+            };
+
+            placesService.nearbySearch(request, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    results.forEach(place => {
+                        const li = document.createElement("li");
+                        li.textContent = place.name;
+                        nearbyList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement("li");
+                    li.textContent = "No nearby travel options found.";
+                    nearbyList.appendChild(li);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
